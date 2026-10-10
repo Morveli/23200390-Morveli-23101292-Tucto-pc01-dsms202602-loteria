@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "308661152017",
+    "project_id": "lumilotto-801bd",
+    "storage_bucket": "lumilotto-801bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308661152017:android:de19e741569d27c50584b0",
+        "android_client_info": {
+          "package_name": "com.example.lumilotto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmqI5eDeYUwbq4M9P9pVy927ItWf_Sjuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
