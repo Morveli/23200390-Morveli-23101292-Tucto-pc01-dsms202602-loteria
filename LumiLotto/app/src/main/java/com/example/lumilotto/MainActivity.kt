@@ -4,44 +4,40 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.lumilotto.ui.theme.LumiLottoTheme
+import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.lumilotto.ui.auth.AuthScreen
+import com.example.lumilotto.ui.auth.AuthViewModel
+import com.example.lumilotto.ui.auth.HomeProvisionalScreen
+import com.example.lumilotto.ui.sorteo.LumiLottoSorteoTheme
 
 class MainActivity : ComponentActivity() {
+    private val authViewModel: AuthViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LumiLottoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+            LumiLottoSorteoTheme {
+                val state by authViewModel.uiState.collectAsState()
+
+                if (state.currentUser != null) {
+                    HomeProvisionalScreen(
+                        currentUser = state.currentUser,
+                        onLogoutClick = { authViewModel.logout() }
+                    )
+                } else {
+                    AuthScreen(
+                        state = state,
+                        onEmailChanged = { authViewModel.onEmailChanged(it) },
+                        onPasswordChanged = { authViewModel.onPasswordChanged(it) },
+                        onConfirmPasswordChanged = { authViewModel.onConfirmPasswordChanged(it) },
+                        onToggleMode = { authViewModel.toggleMode(it) },
+                        onSubmit = { authViewModel.submit() }
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LumiLottoTheme {
-        Greeting("Android")
     }
 }
